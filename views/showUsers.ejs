@@ -1,0 +1,33 @@
+<% include common/head.ejs%>
+<body>
+    <h1>users表展示</h1>
+    <ul>
+            <li>
+                <span>id</span>
+                <span>姓名</span>
+                <span>年龄</span>
+                <span>性别</span>
+                <span>职业</span>
+            </li> 
+        <% for(var i=0; i<users.length; i++){ %>
+            <li>
+                <span><%= users[i].id %></span>
+                <span><%= users[i].name %></span>
+                <span><%= users[i].age %></span>
+                <span><%= users[i].sex %></span>
+                <span><%= users[i].work %></span>
+            </li>    
+        <% } %>
+    </ul>
+</body>
+<script>
+    $.ajax({
+        url:'/sqlone',
+        type: 'POST',
+        data: {id: 1},
+        success: function(res){
+            console.log(res.data[0]);
+        }
+    });
+</script>
+</html>
