@@ -17,10 +17,78 @@ router.get('/', function(req, res) {
     res.render('home.ejs',{userName: 'jinux'});
 });
 
-router.get('/showUsers', function(req, res) {
+//查询接口 "/query"
+router.get('/query', function(req, res) {
     pool.getConnection(function(err, connection) {
         connection.query(userSQL.queryAll, function(err, result) {  
-            res.render('showUsers.ejs',{users: result});        
+            res.render('components/query.ejs',{users: result});        
+            // 释放连接  
+            connection.release();  
+        });
+    })
+});
+
+//添加页面 "/add"
+router.get('/add', function(req, res) {
+    res.render('components/add.ejs',{userName: 'jinux'});
+});
+//添加页面的add post接口
+router.post('/add', function(req, res) {
+    let dbody = req.body;
+    pool.getConnection(function(err, connection) {
+        connection.query(userSQL.insert, [dbody.name,dbody.age,dbody.sex,dbody.work], function(err, result) {  
+            if(err){
+                res.send('插入失败');
+            }else {
+                res.send('插入成功');                        
+            }
+            // 释放连接  
+            connection.release();  
+        });
+    })
+});
+
+//添加页面 "/update"
+router.get('/update', function(req, res) {
+    res.render('components/update.ejs');
+});
+//添加页面的add post接口
+router.post('/update', function(req, res) {
+    let dbody = req.body;
+    pool.getConnection(function(err, connection) {
+        connection.query(userSQL.update, [dbody.name,dbody.age,dbody.sex,dbody.work,dbody.id], function(err, result) {  
+            if(err){
+                res.send('更新失败');
+                console.log(err);
+            }else {
+                res.send('更新成功');                        
+            }
+            // 释放连接  
+            connection.release();  
+        });
+    })
+});
+
+//删除页面 "/delete"
+router.get('/delete', function(req, res) {
+    pool.getConnection(function(err, connection) {
+        connection.query(userSQL.queryAll, function(err, result) {  
+            res.render('components/delete.ejs',{users: result});
+            // 释放连接  
+            connection.release();  
+        });
+    })
+});
+//删除页面 delete post接口
+router.post('/delete', function(req, res) {
+    let dbody = req.body;    
+    pool.getConnection(function(err, connection) {
+        connection.query(userSQL.delete,[dbody.id], function(err, result) {  
+            if(err){
+                res.send('删除操作失败');
+            }else {
+                res.send('删除操作成功');
+            }
             // 释放连接  
             connection.release();  
         });

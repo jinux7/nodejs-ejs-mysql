@@ -1,0 +1,74 @@
+<% include ../common/head.ejs%>
+<style>
+    .wrap_delete {
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .wrap_delete ul {
+        position: absolute;
+    }
+    .wrap_delete ul li {
+        border-bottom: 1px solid #cccccc;
+        padding: 0 5px;
+    }
+    .wrap_delete ul li.title span {
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .wrap_delete ul li span {
+        display: inline-block;
+        width: 120px;
+        padding: 5px 0;
+
+    }
+    button {
+        cursor: pointer;
+    }
+</style>
+<body>
+    <% include ../common/nav.ejs%>        
+    <h1>users表展示</h1>
+    <div class="wrap_delete">
+        <ul>
+            <li class="title">
+                <span>id</span>
+                <span>姓名</span>
+                <span>年龄</span>
+                <span>性别</span>
+                <span>职业</span>
+                <span>操作</span>
+            </li> 
+            <% for(var i=0; i<users.length; i++){ %>
+                <li>
+                    <span><%= users[i].id %></span>
+                    <span><%= users[i].name %></span>
+                    <span><%= users[i].age %></span>
+                    <span><%= users[i].sex %></span>
+                    <span><%= users[i].work %></span>
+                    <button class="btn">删除</button>
+                </li>    
+            <% } %>
+        </ul>
+    </div>
+</body>
+<script>
+    $(function(){
+        $('.wrap_delete ul').on('click','.btn',function(ev){
+            let id = $(this).parent().children().first().html();
+            var r=confirm("确认删除此项吗？");
+            if (r==true){
+                $.ajax({
+                    url:'/delete',
+                    type: 'POST',
+                    data: {id: id},
+                    success: function(res){
+                        console.log(res);
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    });
+    
+</script>
+</html>

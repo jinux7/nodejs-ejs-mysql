@@ -1,0 +1,59 @@
+<% include ../common/head.ejs%>
+<style>
+    .wrap_query {
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .wrap_query ul {
+        position: absolute;
+    }
+    .wrap_query ul li {
+        border-bottom: 1px solid #cccccc;
+        padding: 0 5px;
+    }
+    .wrap_query ul li.title span {
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .wrap_query ul li span {
+        display: inline-block;
+        width: 120px;
+        padding: 5px 0;
+
+    }
+</style>
+<body>
+    <% include ../common/nav.ejs%>        
+    <h1>users表展示</h1>
+    <div class="wrap_query">
+        <ul>
+            <li class="title">
+                <span>id</span>
+                <span>姓名</span>
+                <span>年龄</span>
+                <span>性别</span>
+                <span>职业</span>
+            </li> 
+            <% for(var i=0; i<users.length; i++){ %>
+                <li>
+                    <span><%= users[i].id %></span>
+                    <span><%= users[i].name %></span>
+                    <span><%= users[i].age %></span>
+                    <span><%= users[i].sex %></span>
+                    <span><%= users[i].work %></span>
+                </li>    
+            <% } %>
+        </ul>
+    </div>
+</body>
+<script>
+    // $.ajax({
+    //     url:'/sqlone',
+    //     type: 'POST',
+    //     data: {id: 1},
+    //     success: function(res){
+    //         console.log(res.data[0]);
+    //     }
+    // });
+</script>
+</html>

@@ -1,0 +1,71 @@
+<% include ../common/head.ejs%>
+<style>
+    .wrap_update {
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .wrap_update ul {
+        margin-left: 100px;
+        width: 250px;
+    }
+    .wrap_update ul li {
+        padding: 10px 0;
+    }
+    .wrap_update button {
+        float: right;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <% include ../common/nav.ejs%>
+    <h1>添加信息</h1>
+    <div class="wrap_update">
+        <ul>
+            <li>
+                <span>i&nbsp;d:</span>
+                <input type="text" name="id">
+            </li>
+            <li>
+                <span>姓名:</span>
+                <input type="text" name="name">
+            </li>
+            <li>
+                <span>年龄:</span>
+                <input type="text" name="age">
+            </li>
+            <li>
+                <span>性别:</span>
+                <input type="text" name="sex">
+            </li>
+            <li>
+                <span>工作:</span>
+                <input type="text" name="work">
+            </li>
+            <li>
+                <button id='btn'>提交</button>
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    $(function(){
+        $('#btn').on('click',function(ev){
+            var data = {
+                id: $('input[name="id"]').val(),
+                name: $('input[name="name"]').val(),
+                age: $('input[name="age"]').val() || 0,
+                sex: $('input[name="sex"]').val(),
+                work: $('input[name="work"]').val(),
+            }
+            $.ajax({
+                url:'/update',
+                type: 'POST',
+                data: data,
+                success: function(res){
+                    console.log(res);
+                }
+            });
+        });
+    });
+</script>
+</html>
